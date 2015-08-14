@@ -145,7 +145,16 @@
                         {
                             text: "Delete",
                             handler: function() {
-                                // TODO
+                                var selected = grid.getSelectionModel().getSelected();
+                                if (selected) {
+                                    Ext.Ajax.request({
+                                        url: "/notes/destroy/",
+                                        success: function() {
+                                            notesStore.reload();
+                                        },
+                                        params: {id: selected.get("id")}
+                                    });
+                                }
                             },
                             scope: this
                         },

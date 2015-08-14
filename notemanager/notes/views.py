@@ -54,3 +54,9 @@ def update(request):
     n.category = NoteCategory.objects.get(id=category_id)
     n.save()
     return HttpResponse("")
+
+
+def destroy(request):
+    id_ = request.POST["id"]
+    Note.objects.get(id=id_).delete()
+    return HttpResponse("")
