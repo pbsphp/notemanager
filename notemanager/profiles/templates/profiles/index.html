@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="http://dev.sencha.com/deploy/ext-3.4.0/resources/css/ext-all.css" />
+
+        <!-- Why wipe heroku? -->
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/adapter/ext/ext-base.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/ext-all.js"></script>
+
+        <!-- Local scripts -->
+
+        <script type="text/javascript">
+        {% verbatim %}
+
+
+            Ext.onReady(function(){
+
+                // Add csrf token to every ajax request
+                // Snippet from stackoverflow
+                var token = Ext.util.Cookies.get('csrftoken');
+                if(!token){
+                    Ext.Error.raise("Missing csrftoken cookie");
+                } else {
+                    Ext.Ajax.defaultHeaders = Ext.apply(Ext.Ajax.defaultHeaders || {}, {
+                        'X-CSRFToken': token
+                    });
+                }
+
+
+                // Store for notes
+                var notesStore = new Ext.data.JsonStore({
+                    url: "/notes/",
+                    root: "notes",
+                    autoLoad: true,
+                    fields: [
+                        "id",
+                        "title",
+                        "created_at",
+                        "category__id",
+                        "category__name",
+                        "is_favorite",
+                        "text"
+                    ]
+                });
+
+
+                // Main grid containing notes
+                var grid = new Ext.grid.GridPanel({
+                    store: notesStore,
+                    columns: [
+                        {
+                            header: "ID",
+                            dataIndex: "id"
+                        },
+                        {
+                            header: "Title",
+                            dataIndex: "title"
+                        },
+                        {
+                            header: "Favorite?",
+                            dataIndex: "is_favorite"
+                        },
+                        {
+                            header: "Created at",
+                            dataIndex: "created_at"
+                        },
+                        {
+                            header: "Category",
+                            dataIndex: "category__name"
+                        }
+                    ],
+                    autoWidth: true,
+                    autoHeight: true,
+                    flex: 1,
+                    title: "User notes",
+                });
+
+
+                // Viewpoint, stretchs grid to fullscreen
+                window.viewport = new Ext.Viewport({
+                    layout: {
+                        type: 'hbox',
+                        pack: 'start',
+                        align: 'stretch'
+                    },
+                    items: [grid]
+                });
+
+            });
+
+        {% endverbatim %}
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
