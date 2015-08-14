@@ -47,9 +47,193 @@
                 });
 
 
+                // Store for categories
+                var categoriesStore = new Ext.data.JsonStore({
+                    url: "/notes/categories/",
+                    root: "categories",
+                    autoLoad: true,
+                    fields: [
+                        "id",
+                        "name"
+                    ]
+                });
+
+
                 // Main grid containing notes
                 var grid = new Ext.grid.GridPanel({
                     store: notesStore,
+
+                    tbar: [
+                        {
+                            text: "Add",
+                            handler: function() {
+                                var form = new Ext.form.FormPanel({
+                                    baseCls: "x-plain",
+                                    url: "/note/",
+                                    layout: {
+                                        type: "vbox",
+                                        align: "stretch"
+                                    },
+                                    items: [
+                                        {
+                                            fieldLabel: "Title",
+                                            name: "title",
+                                            xtype: "textfield"
+                                        },
+                                        {
+                                            fieldLabel: "Category",
+                                            name: "category__id",
+                                            xtype: "combo",
+                                            hiddenName: "category__id",
+                                            emptyText: "Select one...",
+                                            triggerAction: "all",
+                                            store: categoriesStore,
+                                            displayField: "name",
+                                            valueField: "id",
+                                            forceSelection: true,
+                                            allowBlank: false,
+                                            editable: false,
+                                        },
+                                        {
+                                            fieldLabel: "Make favorite?",
+                                            name: "is_favorite",
+                                            xtype: "checkbox"
+                                        },
+                                        {
+                                            fieldLabel: "Text",
+                                            name: "text",
+                                            xtype: "textarea"
+                                        },
+                                    ],
+                                    buttons: [
+                                        {
+                                            text: "Change",
+                                            handler: function() {
+                                                form.getForm().submit({
+                                                    url: "/notes/create",
+                                                    method: "POST",
+                                                    success: function() {
+                                                        notesStore.reload();
+                                                    }
+                                                })
+                                            }
+                                        }
+                                    ]
+                                });
+
+                                var win = new Ext.Window({
+                                    title: "Add note",
+                                    collapsible: true,
+                                    maximizable: true,
+                                    width: 750,
+                                    height: 300,
+                                    minWidth: 300,
+                                    minHeight: 200,
+                                    layout: "fit",
+                                    plain: true,
+                                    bodyStyle: "padding: 5px;",
+                                    buttonAlign: "center",
+                                    items: form,
+                                });
+
+                                win.show();
+                            },
+                            scope: this
+                        },
+                        "-",
+                        {
+                            text: "Change",
+                            handler: function() {
+                                var selected = grid.getSelectionModel().getSelected();
+                                if (selected) {
+
+                                    var form = new Ext.form.FormPanel({
+                                        baseCls: "x-plain",
+                                        url: "/note/",
+                                        layout: {
+                                            type: "vbox",
+                                            align: "stretch"
+                                        },
+                                        items: [
+                                            {
+                                                fieldLabel: "Title",
+                                                name: "title",
+                                                xtype: "textfield"
+                                            },
+                                            {
+                                                fieldLabel: "Category",
+                                                name: "category__id",
+                                                xtype: "combo",
+                                                hiddenName: "category__id",
+                                                emptyText: "Select one...",
+                                                triggerAction: "all",
+                                                store: categoriesStore,
+                                                displayField: "name",
+                                                valueField: "id",
+                                                forceSelection: true,
+                                                allowBlank: false,
+                                                editable: false,
+                                            },
+                                            {
+                                                fieldLabel: "Make favorite?",
+                                                name: "is_favorite",
+                                                xtype: "checkbox"
+                                            },
+                                            {
+                                                fieldLabel: "Text",
+                                                name: "text",
+                                                xtype: "textarea"
+                                            },
+                                        ],
+                                        buttons: [
+                                            {
+                                                text: "Change",
+                                                handler: function() {
+                                                    form.getForm().submit({
+                                                        url: "/notes/update",
+                                                        method: "POST",
+                                                        success: function() {
+                                                            notesStore.reload();
+                                                        }
+                                                    })
+                                                }
+                                            }
+                                        ]
+                                    });
+
+                                    form.getForm().loadRecord(selected);
+
+                                    var win = new Ext.Window({
+                                        title: "Add note",
+                                        collapsible: true,
+                                        maximizable: true,
+                                        width: 750,
+                                        height: 300,
+                                        minWidth: 300,
+                                        minHeight: 200,
+                                        layout: "fit",
+                                        plain: true,
+                                        bodyStyle: "padding: 5px;",
+                                        buttonAlign: "center",
+                                        items: form,
+                                    });
+
+                                    win.show();
+                                }
+                            },
+                            scope: this
+                        },
+                        "-",
+                        {
+                            text: "Delete",
+                            handler: function() {
+                                // TODO
+                            },
+                            scope: this
+                        },
+                        "-"
+                    ],
+
                     columns: [
                         {
                             header: "ID",
@@ -74,6 +258,7 @@
                     ],
                     autoWidth: true,
                     autoHeight: true,
+                    sm: new Ext.grid.RowSelectionModel({singleSelect: true}),
                     flex: 1,
                     title: "User notes",
                 });

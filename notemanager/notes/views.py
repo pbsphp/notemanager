@@ -16,3 +16,20 @@ def index(request):
             "text"
         ))
     })
+
+
+def categories(request):
+    return JsonResponse({
+        "categories": list(NoteCategory.objects.values(
+            "id",
+            "name"
+        ))
+    })
+
+
+def create(request):
+    pass
+
+
+def update(request):
+    pass
