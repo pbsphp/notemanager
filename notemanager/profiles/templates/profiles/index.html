@@ -87,11 +87,6 @@
                                     ]
                                 });
 
-                                form.add({
-                                    xtype: "hidden",
-                                    name: "id"
-                                });
-
                                 var win = new NoteFormWindow({
                                     items: form
                                 });
@@ -128,6 +123,11 @@
                                                 }
                                             }
                                         ]
+                                    });
+
+                                    form.add({
+                                        xtype: "hidden",
+                                        name: "id"
                                     });
 
                                     form.getForm().loadRecord(selected);
