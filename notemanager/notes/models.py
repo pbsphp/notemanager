@@ -8,6 +8,9 @@ class NoteCategory(models.Model):
 
 
 class Note(models.Model):
+    class Meta:
+        ordering = ["-created_at"]
+
     title = models.CharField(max_length=254)
     created_at = models.DateTimeField(default=timezone.now)
     category = models.ForeignKey(NoteCategory)
