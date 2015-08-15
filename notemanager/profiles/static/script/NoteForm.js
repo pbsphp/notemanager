@@ -27,7 +27,7 @@
                         hiddenName: "category__id",
                         emptyText: "Select one...",
                         triggerAction: "all",
-                        store: window.categoriesStore,
+                        store: categoriesStore,
                         displayField: "name",
                         valueField: "id",
                         forceSelection: true,

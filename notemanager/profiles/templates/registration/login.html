@@ -6,93 +6,66 @@
         {% load staticfiles %}
         <link rel="stylesheet" type="text/css" href="http://dev.sencha.com/deploy/ext-3.4.0/resources/css/ext-all.css" />
 
+
         <!-- Why wipe heroku? -->
         <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/adapter/ext/ext-base.js"></script>
         <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/ext-all.js"></script>
+
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/menu/RangeMenu.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/menu/ListMenu.js"></script>
+
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/GridFilters.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/filter/Filter.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/filter/StringFilter.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/filter/DateFilter.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/filter/ListFilter.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/filter/NumericFilter.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/filter/BooleanFilter.js"></script>
+
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/FieldLabeler.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/FieldReplicator.js"></script>
 
         <!-- Local scripts -->
 
         <script type="text/javascript" src="{% static "script/NoteForm.js" %}"></script>
         <script type="text/javascript" src="{% static "script/NoteFormWindow.js" %}"></script>
+        <script type="text/javascript" src="{% static "script/stores.js" %}"></script>
+        <script type="text/javascript" src="{% static "script/utils.js" %}"></script>
+        <script type="text/javascript" src="{% static "script/filters.js" %}"></script>
+        <script type="text/javascript" src="{% static "script/grid.js" %}"></script>
+
+
+        <script type="text/javascript" src="{% static "script/auth_scripts.js" %}"></script>
 
         <script type="text/javascript">
-
-            Ext.onReady(function(){
-
-                // Add csrf token to every ajax request
-                // Snippet from stackoverflow
-                var token = Ext.util.Cookies.get('csrftoken');
-                if(!token){
-                    Ext.Error.raise("Missing csrftoken cookie");
-                } else {
-                    Ext.Ajax.defaultHeaders = Ext.apply(Ext.Ajax.defaultHeaders || {}, {
-                        'X-CSRFToken': token
-                    });
+        page = {
+            url: "{% url 'django.contrib.auth.views.login' %}",
+            csrfToken: "{{ csrf_token }}",
+            formFields: [
+                {
+                    fieldLabel: "Username",
+                    name: "username",
+                    xtype: "textfield",
+                },
+                {
+                    fieldLabel: "Password",
+                    name: "password",
+                    inputType: "password",
+                    xtype: "textfield"
+                },
+                {
+                    name: "csrfmiddlewaretoken",
+                    xtype: "hidden",
+                    value: "{{ csrf_token }}"
                 }
-
-                // Login form
-                var loginForm = new Ext.form.FormPanel({
-                    url: "{% url 'django.contrib.auth.views.login' %}",
-                    method: "POST",
-                    standardSubmit: true,
-                    labelWidth: 75,
-                    bodyStyle:'padding:5px 5px 0',
-
-
-                    defaultType: 'textfield',
-                    items: [
-                        {
-                            fieldLabel: "Username",
-                            name: "username",
-                            xtype: "textfield",
-                        },
-                        {
-                            fieldLabel: "Password",
-                            name: "password",
-                            inputType: "password",
-                            xtype: "textfield"
-                        },
-                        {
-                            name: "{{ next }}",
-                            xtype: "hidden"
-                        },
-                        {
-                            name: "csrfmiddlewaretoken",
-                            xtype: "hidden",
-                            value: "{{ csrf_token }}"
-                        }
-                    ],
-                    buttons: [{
-                        text: "submit",
-                        handler: function() {
-                            loginForm.getForm().submit();
-                        }
-                    }]
-                });
-
-
-                // Login form window
-                var win = new Ext.Window({
-                    layout: "fit",
-                    width: 300,
-                    height: 200,
-                    closable: false,
-                    plain: true,
-                    items: loginForm,
-                    title: "Login",
-                });
-                win.show(this);
-
-
-                // Show errors if exists
-                {% if form.errors %}
-                    Ext.MessageBox.alert("Login failed",
-                        "Username and password did not match, try again.");
-                {% endif %}
-
-            });
+            ],
+            {% if form.errors %}
+                error: "Login failed! Username and password didn't match",
+            {% endif %}
+        };
 
         </script>
+        <script type="text/javascript" src="{% static "script/auth_scripts.js" %}"></script>
     </head>
     <body>
     </body>
