@@ -4,7 +4,7 @@
         collapsible: true,
         maximizable: true,
         width: 750,
-        height: 300,
+        height: 500,
         minWidth: 300,
         minHeight: 200,
         layout: "fit",

@@ -90,6 +90,24 @@ def unshare(request):
     return HttpResponse("")
 
 
+@login_required
+def favourite(request):
+    id_ = request.POST["id"]
+    n = Note.objects.filter(user=request.user).get(id=id_)
+    n.is_favorite = True
+    n.save()
+    return HttpResponse("")
+
+
+@login_required
+def unfavourite(request):
+    id_ = request.POST["id"]
+    n = Note.objects.filter(user=request.user).get(id=id_)
+    n.is_favorite = False
+    n.save()
+    return HttpResponse("")
+
+
 def raw_note(request, uuid):
     note = Note.objects.get(uuid=uuid)
     return HttpResponse(note.text)

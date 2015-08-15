@@ -2,6 +2,8 @@
     NoteForm = Ext.extend(Ext.form.FormPanel, {
         baseCls: "x-plain",
         url: "/note/",
+        labelWidth: 90,
+        bodyStyle:'padding: 5px 5px 0',
 
         layout: {
             type: "vbox",
@@ -10,11 +12,13 @@
 
         initComponent: function() {
             Ext.applyIf(this, {
+                labelWidth: 70,
                 items: [
                     {
                         fieldLabel: "Title",
                         name: "title",
-                        xtype: "textfield"
+                        xtype: "textfield",
+                        plugins: [ Ext.ux.FieldLabeler ],
                     },
                     {
                         fieldLabel: "Category",
@@ -29,16 +33,12 @@
                         forceSelection: true,
                         allowBlank: false,
                         editable: false,
-                    },
-                    {
-                        fieldLabel: "Make favorite?",
-                        name: "is_favorite",
-                        xtype: "checkbox"
+                        plugins: [ Ext.ux.FieldLabeler ],
                     },
                     {
                         fieldLabel: "Text",
                         name: "text",
-                        xtype: "textarea"
+                        xtype: "htmleditor"
                     },
                 ]
             });
