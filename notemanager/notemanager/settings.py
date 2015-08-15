@@ -27,6 +27,9 @@ TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# Login url
+LOGIN_URL = '/profiles/login'
+
 # Redirect after login
 LOGIN_REDIRECT_URL = '/profiles/'
 
