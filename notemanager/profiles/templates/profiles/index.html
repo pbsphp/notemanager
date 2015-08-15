@@ -217,27 +217,6 @@
                             },
                             scope: this
                         },
-                        "-",
-                        {
-                            text: "Share",
-                            handler: function() {
-                                var selected = grid.getSelectionModel().getSelected();
-                                if (selected) {
-                                    var action = (selected.get("uuid") ?
-                                        "/notes/unshare/" :
-                                        "/notes/share/");
-                                    Ext.Ajax.request({
-                                        url: action,
-                                        success: function() {
-                                            notesStore.reload();
-                                        },
-                                        params: {id: selected.get("id")}
-                                    });
-
-                                }
-                            },
-                            scope: this
-                        },
                         "-"
                     ],
 
@@ -284,9 +263,34 @@
                             dataIndex: "category__name"
                         },
                         {
+                            header: "Public",
+                            dataIndex: "uuid",
+                            xtype: "booleancolumn",
+                            trueText: "&#9733;",
+                            falseText: "&#9734;",
+                            listeners: {
+                                click: function() {
+                                    var selected = grid.getSelectionModel().getSelected();
+                                    if (selected) {
+                                        var action = (selected.get("uuid") ?
+                                            "/notes/unshare/" :
+                                            "/notes/share/");
+                                        Ext.Ajax.request({
+                                            url: action,
+                                            success: function() {
+                                                notesStore.reload();
+                                            },
+                                            params: {id: selected.get("id")}
+                                        });
+                                    }
+                                }
+                            }
+                        },
+                        {
                             header: "Public link",
                             dataIndex: "uuid",
                             renderer: getPublicLinkFromUuid,
+                            sortable: false
                         }
                     ],
                     autoWidth: true,
