@@ -8,4 +8,7 @@ urlpatterns = [
     url(r'^create/$', views.create, name='create'),
     url(r'^update/$', views.update, name='update'),
     url(r'^destroy/$', views.destroy, name='destroy'),
+    url(r'^share/$', views.share, name='share'),
+    url(r'^unshare/$', views.unshare, name='unshare'),
+    url(r'^(?P<uuid>\w+-\w+-\w+-\w+-\w+)$', views.raw_note, name='raw_note'),
 ]

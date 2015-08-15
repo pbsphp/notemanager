@@ -1,3 +1,5 @@
+import uuid
+
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User
@@ -17,7 +19,8 @@ def index(request):
             "category__id",
             "category__name",
             "is_favorite",
-            "text"
+            "text",
+            "uuid"
         ))
     })
 
@@ -67,3 +70,26 @@ def destroy(request):
     id_ = request.POST["id"]
     Note.objects.filter(user=request.user).get(id=id_).delete()
     return HttpResponse("")
+
+
+@login_required
+def share(request):
+    id_ = request.POST["id"]
+    n = Note.objects.filter(user=request.user).get(id=id_)
+    n.uuid = uuid.uuid4()
+    n.save()
+    return HttpResponse("")
+
+
+@login_required
+def unshare(request):
+    id_ = request.POST["id"]
+    n = Note.objects.filter(user=request.user).get(id=id_)
+    n.uuid = None
+    n.save()
+    return HttpResponse("")
+
+
+def raw_note(request, uuid):
+    note = Note.objects.get(uuid=uuid)
+    return HttpResponse(note.text)

@@ -17,3 +17,4 @@ class Note(models.Model):
     user = models.ForeignKey(User)
     is_favorite = models.BooleanField(default=False)
     text = models.TextField(blank=True)
+    uuid = models.CharField(max_length=64, null=True, unique=True)
