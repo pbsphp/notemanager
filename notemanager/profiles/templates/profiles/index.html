@@ -10,6 +10,23 @@
         <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/adapter/ext/ext-base.js"></script>
         <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/ext-all.js"></script>
 
+
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/menu/RangeMenu.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/menu/ListMenu.js"></script>
+
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/GridFilters.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/filter/Filter.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/filter/StringFilter.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/filter/DateFilter.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/filter/ListFilter.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/filter/NumericFilter.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/ux/gridfilters/filter/BooleanFilter.js"></script>
+        
+
+
+        <!--<script type="text/javascript" src="http://dev.sencha.com/deploy/ext-3.4.0/examples/grid-filtering/grid-filter-local.js"></script>-->
+
+
         <!-- Local scripts -->
 
         <script type="text/javascript" src="{% static "script/NoteForm.js" %}"></script>
@@ -66,9 +83,31 @@
                 });
 
 
+                // Notes grid filter config
+                var filters = new Ext.ux.grid.GridFilters({
+                    local: true,
+                    filters: [
+                    {
+                        type: "string",
+                        dataIndex: "title"
+                    },
+                    {
+                        type: "date",
+                        dataIndex: "created_at"
+                    },
+                    {
+                        type: "boolean",
+                        dataIndex: "is_favorite"
+                    }
+                    ]
+                });
+
+
                 // Main grid containing notes
                 var grid = new Ext.grid.GridPanel({
                     store: notesStore,
+
+                    plugins: [filters],
 
                     tbar: [
                         {
@@ -168,7 +207,8 @@
                     columns: [
                         {
                             header: "ID",
-                            dataIndex: "id"
+                            dataIndex: "id",
+                            filterable: true
                         },
                         {
                             header: "Title",
