@@ -36,3 +36,6 @@ coverage.xml
 
 # Databases
 *.sqlite*
+
+# Virtual env directory
+venv
