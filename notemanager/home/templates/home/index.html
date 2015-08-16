@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Starter Template for Bootstrap</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://getbootstrap.com/examples/starter-template/starter-template.css" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Note manager</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/profiles/register/">Sign up</a></li>
+                        <li><a href="/profiles/login/">Sign in</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+
+            <div class="starter-template">
+                <h1>Тестовое задание "Менеджер заметок"</h1>
+                <p class="lead">
+                    Web-приложение для хранения заметок. Каждая заметка имеет заголовок, содержимое, категорию и может быть помечена как “избранная”. Интерфейс приложения должен позволять выполнять поиск/сортировку заметок пользователя по различным критериям.
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Пользователи</h2>
+                    <p>
+                        Админка стандартная: <a href="/admin/">/admin/</a><br />
+                        Логин: admin <br />
+                        Пароль: sweetroll <br />
+                        Регистрация: <a href="/profiles/register/">/profiles/register/</a><br />
+                        После регистрации необходимо повторно ввести логин и пароль. <br />
+                        Вход: <a href="/profiles/login/">/profiles/login/</a><br />
+                        Можно поспользоваться готовым пользователем (testuser : 123) <br />
+                        После авторизации можно разлогиниться используя кнопку в правом верхнем углу (Logout).<br />
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <h2>Заметки</h2>
+                    <p>
+                        Заметки можно создавать, читать, модифицировать и удалять, используя соответствующие кнопки наверху таблицы. Пользователь может работать только со своими заметками. Каждая заметка содержит заголовок, содержимое, дату и время создания, категорию, отметку "избранная". Некоторые заметки также имеют публичный uuid, используя который можно посмотреть содержимое заметки в виде html-кода. Категории настраиваются в админке. Таблица с заметками поддерживает сортировку и фильтры используя встроенные возможности extjs 3.4.<br />
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <h2>Управление заметками</h2>
+                    <p>
+                        Пользователь может модифицировать заголовок, категорию и текст заметки используя соответствующую форму. Для публикации заметки необходимо кликнуть ячейку Public в таблице, после чего появится публичная ссылка на текст заметки. Для отмены публикации необходимо кликнуть на ячейку еще раз. Для изменения ответки "избранная" нужно кликнуть на ячейку "Favourite". Дата создания заметки может изменяться только администратором.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Взаимодействие с сервером</h2>
+                    <p>
+                        Практически для всех операций по управлению заметками используется ajax. Тестовое приложение крутится на бесплатном тарифе Heroku, а потому не отличается быстродействием. Если кнопка не работает, скорее всего стоит подождать несколько секунд.
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <h2>Серверная сторона</h2>
+                    <p>
+                        В качестве БД используется SQLite3, в качестве БД на heroku - PostgreSQL. Приложение разрабатывалось под Python3, а потому под второй версией может работать некорректно. А может и корректно.
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <h2>Исходники</h2>
+                    <p>
+                        Исходники лежат на моем github: <a href="https://github.com/pbsphp/notemanager">github.com/pbsphp/notemanager</a>. Конфигурация проекта на heroku немного отличается от того, который на гитхабе.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
