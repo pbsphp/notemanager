@@ -17,7 +17,13 @@ var grid = new Ext.grid.GridPanel({
                                     url: "/notes/create/",
                                     method: "POST",
                                     success: function() {
+                                        Ext.Msg.alert("Success",
+                                            "Note created.");
                                         notesStore.reload();
+                                    },
+                                    failure: function() {
+                                        Ext.Msg.alert("Error",
+                                            "Unable to create note");
                                     }
                                 })
                             }
@@ -55,7 +61,13 @@ var grid = new Ext.grid.GridPanel({
                                         url: "/notes/update/",
                                         method: "POST",
                                         success: function() {
+                                        Ext.Msg.alert("Success",
+                                            "Note changed.");
                                             notesStore.reload();
+                                        },
+                                        failure: function() {
+                                            Ext.Msg.alert("Error",
+                                                "Unable to change note");
                                         }
                                     })
                                 }
