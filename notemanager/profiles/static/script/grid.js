@@ -104,7 +104,14 @@ var grid = new Ext.grid.GridPanel({
             },
             scope: this
         },
-        "-"
+        "->",
+        {
+            text: "Logout",
+            handler: function() {
+                location.assign("/profiles/logout/");
+            },
+            scope: this
+        },
     ],
 
     columns: [

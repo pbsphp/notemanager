@@ -12,6 +12,12 @@ urlpatterns = [
         form_class=UserCreationForm,
         success_url=settings.LOGIN_URL
     ), name='register'),
+
+    # This rule should be above...
+    url(r'^logout/$', 'django.contrib.auth.views.logout',
+        {'next_page': '/'}),
+
+    # ... than this
     url(r'', include('django.contrib.auth.urls')),
 
     url(r'^$', views.index, name='index'),
